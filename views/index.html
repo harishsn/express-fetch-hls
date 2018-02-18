@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title><%= title %></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
+	</head>
+	<body>
+        <section>
+            <form id="theForm" class="siform" autocomplete="off">
+                <ol class="hls-url">
+                  <li class="current">
+        				        <h6><%= content %></h6>
+                  </li>
+					<li class="current">
+				        <span><label for="hlsurl">Remote HLS url</label></span>
+                        <input id="hlsurl" name="hlsurl" type="text"/>
+                    </li>
+                </ol>
+                <p><input type="submit" value="Submit" class="btn submit-btn"> </p>
+                <div class="output"></div>
+                <div class='btn-group hidden'>
+                  <a href="javascript:void(0)" class="clipboard heads-up">Copy</a>
+                  <a href="http://demo.jwplayer.com/developer-tools/http-stream-tester/" target="_blank" class="heads-up">Test in JW Player</a>
+                </div>
+            </form>
+
+        </section>
+
+      <script src="javascripts/script.js"></script>
+	</body>
 </html>
