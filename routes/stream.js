@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
   hlsfetcher(options).then(function() {
     res.send({
           success : true,
-          message : `${req.protocol}://${req.hostname}:3000/storage/${path.rel_file}`
+          message : `${req.protocol}://${req.hostname}/storage/${path.rel_file}`
         });
   }).catch(function(error) {
     res.send(error);
