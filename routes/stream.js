@@ -7,6 +7,7 @@ var filesystem = require('../utils/filesystem');
 /* GET stream. */
 router.get('/', function(req, res, next) {
 
+
   if(!validator.validateRemoteURL(req.query.hlsurl)){
         res.send({
             success : false,
@@ -15,6 +16,7 @@ router.get('/', function(req, res, next) {
     }
 
   var path = filesystem.getStorableLocationDetails(req.query.hlsurl);
+
 
   var options = {
     input: req.query.hlsurl,
@@ -29,7 +31,10 @@ router.get('/', function(req, res, next) {
           message : `${req.protocol}://${req.hostname}/storage/${path.rel_file}`
         });
   }).catch(function(error) {
-    res.send(error);
+    res.send({
+          success : false,
+          message : `Something went wrong`
+        });
   });
 });
 

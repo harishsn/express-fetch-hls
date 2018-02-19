@@ -1,5 +1,6 @@
 $("#theForm").submit(function(e) {
     e.preventDefault();
+    if(!validateField()) return;
     var url = `/stream?${$("#theForm").serialize()}`;
     $('.submit-btn').val('Processing..').attr('disabled','disabled');
     $( ".btn-group" ).addClass( "hidden" );
@@ -34,4 +35,14 @@ function copyToClipboard(element) {
   $temp.val($(element).text()).select();
   document.execCommand("copy");
   $temp.remove();
+}
+
+function validateField() {
+    var x = document.forms["theForm"]["hlsurl"].value;
+    console.log(x);
+    if (x == "") {
+        alert("HLS url field is required");
+        return false;
+    }
+    return true;
 }
