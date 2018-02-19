@@ -7,7 +7,7 @@ var filesystem = require('../utils/filesystem');
 /* GET stream. */
 router.get('/', function(req, res, next) {
 
-
+  // Validate for valid input url
   if(!validator.validateRemoteURL(req.query.hlsurl)){
         res.send({
             success : false,
@@ -15,9 +15,11 @@ router.get('/', function(req, res, next) {
         });
     }
 
+  // Get Download location from input url
   var path = filesystem.getStorableLocationDetails(req.query.hlsurl);
 
-
+  // Using Hls fetcher fetch video manifests and related content
+  // https://github.com/videojs/hls-fetcher
   var options = {
     input: req.query.hlsurl,
     output: path.rel_dir,

@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var stream = require('./routes/stream');
 
 var app = express();
+// Fix cross site issues
 app.use(cors())
 
 // view engine setup
