@@ -8,5 +8,10 @@ clone project and run this in root folder
   $ [sudo] npm start
 ```
 
+## Initialise sqlite database
+``` bash
+  $ [sudo] node db.js
+```
+
 ## Demo
 [http://ec2-13-127-42-21.ap-south-1.compute.amazonaws.com](http://ec2-13-127-42-21.ap-south-1.compute.amazonaws.com/)
