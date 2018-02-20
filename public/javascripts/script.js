@@ -62,19 +62,19 @@ $(document).ready(function() {
 
 });
 
-
+// Get latest fetch entries from server
 var fetchRecent = function() {
   $.ajax({
-         type: "GET",
-         url: '/stream/recent',
-         success: function(data)
-         {
-            $('.table-body').html('');
-             for (var i = 0; i < data.message.length; i++) {
-               $('.table-body').append('<tr><td><p>'+data.message[i].remote_url+'</p></td><td><p>'+data.message[i].local_url+'</p></td></tr>');
-             }
-         }
-       });
+       type: "GET",
+       url: '/stream/recent',
+       success: function(data)
+       {
+          $('.table-body').html('');
+           for (var i = 0; i < data.message.length; i++) {
+             $('.table-body').append('<tr><td><p>'+data.message[i].remote_url+'</p></td><td><p>'+data.message[i].local_url+'</p></td></tr>');
+           }
+       }
+   });
 }
 
 

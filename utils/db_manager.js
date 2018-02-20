@@ -36,21 +36,7 @@ var insertEntry = function (local_url, remote_url) {
     );
 };
 
-var getAllEntries = new Promise(function(resolve, reject){
-    var db = new sqlite3.Database(path.join(process.cwd(), 'express-fetch-hls.db'));
-    db.serialize(function() {
-      db.all(`select * from recents`, function (err, rows) {
-        if(err){
-            reject(err);
-        }else{
-            resolve(rows);
-        }
-      });
-    });
-});
-
 module.exports = {
   getEntry,
-  insertEntry,
-  getAllEntries
+  insertEntry
 }

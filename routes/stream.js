@@ -22,13 +22,15 @@ router.get('/', function(req, res, next) {
   var path = filesystem.getStorableLocationDetails(req.query.hlsurl);
   db_manager.getEntry(req.query.hlsurl)
   .then(response => {
-    console.log(response);
+    // Check if entry already exists in database for input url and return computed url
     if(response.length > 0) {
       res.send({
               success : true,
               message : response[0].local_url
           });
     }else{
+
+      // Fetch video components from url
       var options = {
         input: req.query.hlsurl,
         output: path.rel_dir,
@@ -38,6 +40,7 @@ router.get('/', function(req, res, next) {
 
       hlsfetcher(options).then(function() {
         var local_url = `${req.protocol}://${req.hostname}/storage/${path.rel_file}`;
+        // Insert into database
         db_manager.insertEntry(local_url, req.query.hlsurl)
         .then(()=>{
             res.send({
@@ -57,25 +60,17 @@ router.get('/', function(req, res, next) {
 
 });
 
+
+/* GET recent fetches. */
 router.get('/recent', function(req, res, next) {
-  // db_manager.getAllEntries
-  // .then(entries => {
-  //   res.send({
-  //         success : true,
-  //         message : entries
-  //       });
-  // })
-  // .catch(error => {
-  //   res.send({
-  //         success : false,
-  //         message : `Something went wrong`
-  //       });
-  // });
   var db = new sqlite3.Database(path.join(process.cwd(), 'express-fetch-hls.db'));
   db.serialize(function() {
     db.all(`select * from recents`, function (err, rows) {
       if(err){
-          //reject(err);
+        res.send({
+                success : false,
+                message : `Something went wrong`
+              });
       }else{
         res.send({
                 success : true,
