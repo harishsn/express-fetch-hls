@@ -18,47 +18,41 @@ router.get('/', function(req, res, next) {
         });
     }
 
-  // Get Download location from input url
-  var path = filesystem.getStorableLocationDetails(req.query.hlsurl);
-  db_manager.getEntry(req.query.hlsurl)
-  .then(response => {
-    // Check if entry already exists in database for input url and return computed url
-    if(response.length > 0) {
+    //Get downloadable path
+    var path = filesystem.getStorableLocationDetails(req.query.hlsurl);
+
+    // Fetch video components from url
+    var options = {
+      input: req.query.hlsurl,
+      output: path.rel_dir,
+      concurrency: 5,
+      decrypt: false
+    };
+
+    hlsfetcher(options).then(function() {
+      var local_url = `${req.protocol}://${req.hostname}/storage/${path.rel_file}`;
+      addEntryToDatabase(req.query.hlsurl, local_url);
       res.send({
-              success : true,
-              message : response[0].local_url
+            success : true,
+            message : local_url
           });
-    }else{
-
-      // Fetch video components from url
-      var options = {
-        input: req.query.hlsurl,
-        output: path.rel_dir,
-        concurrency: 5,
-        decrypt: false
-      };
-
-      hlsfetcher(options).then(function() {
-        var local_url = `${req.protocol}://${req.hostname}/storage/${path.rel_file}`;
-        // Insert into database
-        db_manager.insertEntry(local_url, req.query.hlsurl)
-        .then(()=>{
-            res.send({
-                success : true,
-                message : local_url
-            });
-        })
-      }).catch(function(error) {
-        res.send({
-              success : false,
-              message : `Something went wrong`
-            });
-      });
-    }
-  })
-  .catch(e => console.log(e));
-
+    }).catch(function(error) {
+      res.send({
+            success : false,
+            message : `Something went wrong`
+          });
+    });
 });
+
+// Add to database id not exists
+function addEntryToDatabase(hlsurl, local_url){
+  db_manager.getEntry(hlsurl)
+  .then(response => {
+    if(response.length == 0) {
+      db_manager.insertEntry(local_url, hlsurl);
+    }
+  });
+}
 
 
 /* GET recent fetches. */
