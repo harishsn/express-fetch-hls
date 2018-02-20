@@ -15,7 +15,7 @@ section {
 	padding: 5em 2em 10em;
 }
 
-.btn {
+.btn-submit {
   position: relative;
   vertical-align: top;
   width: 40%;
@@ -31,7 +31,7 @@ section {
 
 }
 
-.btn:active, .btn:hover{
+.btn-submit:active, .btn-submit:hover{
     outline: none;
     -webkit-box-shadow: 0px 5px 0px 0px rgba(0,0,0,0.2);
     -moz-box-shadow: 0px 5px 0px 0px rgba(0,0,0,0.2);
@@ -120,7 +120,7 @@ section {
 
 .output {
   padding-top: 30px;
-  font-size: 0.7em;
+  font-size: 1em;
 }
 
 .output p{
@@ -128,11 +128,16 @@ section {
   word-wrap: break-word;
 }
 
-.heads-up {
-  font-size: 0.4em;
-  text-decoration: underline;
-  color: #fff;
+td p{
+	width: 400px;
+	word-wrap: break-word;
 }
+
+.table-caption{
+	color: #fff;
+	font-size: 2em;
+}
+
 
 .btn-group {
   display: inline;
@@ -145,6 +150,34 @@ section {
 /* Remove IE clear cross */
 input[type=text]::-ms-clear {
     display: none;
+}
+
+.table-bordered {
+  border: 1px solid #ddd !important;
+}
+
+.heads-up {
+	color: #fff;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table tfoot tr td {
+  text-align: center !important;
+}
+
+@media (max-width: 39.9375em) {
+  .tablesaw-stack tbody tr:not(:last-child) {
+    border-bottom: 2px solid #0B0B0D;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
 }
 
 /* Adjust form for smaller screens */

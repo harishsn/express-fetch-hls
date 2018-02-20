@@ -14,6 +14,7 @@ $("#theForm").submit(function(e) {
                  $('.submit-btn').val('Submit').removeAttr('disabled');
                  $(".output").html(`<p class='url'>${data.message}</p>`);
                  $( ".btn-group" ).removeClass( "hidden" );
+                 fetchRecent();
                }else{
                  $('.submit-btn').val('Submit').removeAttr('disabled');
                  alert(data.message);
@@ -24,10 +25,59 @@ $("#theForm").submit(function(e) {
 });
 
 $(document).ready(function() {
-    $(".clipboard").click(function() {
-        copyToClipboard('.url');
+
+    $(".clipboard").tooltip({
+      trigger: 'click',
+      placement: 'bottom'
     });
+
+    function setTooltip(message) {
+      $(".clipboard").tooltip('hide')
+        .attr('data-original-title', message)
+        .tooltip('show');
+    }
+
+    function hideTooltip() {
+      setTimeout(function() {
+        $(".clipboard").tooltip('hide');
+      }, 1000);
+    }
+
+    // Clipboard
+
+    var clipboard = new Clipboard(".clipboard");
+
+    clipboard.on('success', function(e) {
+      copyToClipboard('.url');
+      setTooltip('Copied!');
+      hideTooltip();
+    });
+
+    clipboard.on('error', function(e) {
+      setTooltip('Failed!');
+      hideTooltip();
+    });
+
+    fetchRecent();
+
 });
+
+
+var fetchRecent = function() {
+  $.ajax({
+         type: "GET",
+         url: '/stream/recent',
+         success: function(data)
+         {
+            $('.table-body').html('');
+             for (var i = 0; i < data.message.length; i++) {
+               $('.table-body').append('<tr><td><p>'+data.message[i].remote_url+'</p></td><td><p>'+data.message[i].local_url+'</p></td></tr>');
+             }
+         }
+       });
+}
+
+
 
 function copyToClipboard(element) {
   var $temp = $("<input>");

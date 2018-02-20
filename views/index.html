@@ -4,7 +4,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><%= title %></title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 
 	</head>
@@ -13,23 +13,43 @@
             <form id="theForm" name="theForm" class="siform" autocomplete="off">
                 <ol class="hls-url">
                   <li class="current">
-        				        <h6><%= content %></h6>
+        				        <h3><%= content %></h3>
                   </li>
 					<li class="current">
 				        <span><label for="hlsurl">Remote HLS url</label></span>
                         <input id="hlsurl" name="hlsurl" type="text"/>
                     </li>
                 </ol>
-                <p><input type="submit" value="Submit" class="btn submit-btn"> </p>
+                <p><input type="submit" value="Submit" class="btn-submit submit-btn"> </p>
                 <div class="output"></div>
                 <div class='btn-group hidden'>
-                  <a href="javascript:void(0)" class="clipboard heads-up">Copy</a>
-                  <a href="http://demo.jwplayer.com/developer-tools/http-stream-tester/" target="_blank" class="heads-up">Test in JW Player</a>
+									<button type="button" data-clipboard-text="1" class="btn btn-link clipboard heads-up">Copy</button>
+									<a class="btn btn-link heads-up" target="_blank" href="http://demo.jwplayer.com/developer-tools/http-stream-tester/" role="button">Test in JW Player</a>
                 </div>
             </form>
 
-        </section>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+							<table class="table table-bordered recent-table">
+							<caption class="table-caption text-center">Recent</caption>
+		          <thead>
+		            <tr>
+		              <th>Remote HLS url</th>
+		              <th>Local HLS url</th>
+		            </tr>
+		          </thead>
+		          <tbody class="table-body">
+		          </tbody>
+		        </table>
+					</div>
+					</div>
+					</div>
 
-      <script src="javascripts/script.js"></script>
+        </section>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.10/clipboard.min.js"></script>
+				<script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      	<script src="javascripts/script.js"></script>
 	</body>
 </html>

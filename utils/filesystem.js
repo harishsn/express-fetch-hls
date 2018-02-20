@@ -19,5 +19,6 @@ function getStorableLocationDetails(url){
 }
 
 module.exports = {
-  getStorableLocationDetails
+  getStorableLocationDetails,
+  getDirectory
 };
