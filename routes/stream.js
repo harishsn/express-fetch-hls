@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var hlsfetcher = require('../vendor/hls-fetcher/src');
-var validator = require('../utils/validator');
-var filesystem = require('../utils/filesystem');
-var db_manager = require('../utils/db_manager');
-var sqlite3 = require('sqlite3').verbose();
+var validator = require('../service/validatorService');
+var filesystem = require('../service/fileService');
+var db_manager = require('../service/dbService');
 var path = require('path');
 
 /* GET stream. */
@@ -37,14 +36,14 @@ router.get('/', function(req, res, next) {
             message : local_url
           });
     }).catch(function(error) {
-      res.send({
+      res.status(500).send({
             success : false,
             message : `Something went wrong`
           });
     });
 });
 
-// Add to database id not exists
+// Add to database if not exists
 function addEntryToDatabase(hlsurl, local_url){
   db_manager.getEntry(hlsurl)
   .then(response => {
@@ -57,21 +56,18 @@ function addEntryToDatabase(hlsurl, local_url){
 
 /* GET recent fetches. */
 router.get('/recent', function(req, res, next) {
-  var db = new sqlite3.Database(path.join(process.cwd(), 'express-fetch-hls.db'));
-  db.serialize(function() {
-    db.all(`select * from recents`, function (err, rows) {
-      if(err){
-        res.send({
-                success : false,
-                message : `Something went wrong`
-              });
-      }else{
-        res.send({
-                success : true,
-                message : rows
-              });
-      }
-    });
+  db_manager.getAllEntries()
+  .then(response => {
+    res.send({
+          success : true,
+          message : response
+        });
+  }).catch(error => {
+    console.log(error);
+    res.status(500).send({
+          success : false,
+          message : error
+        });
   });
 });
 

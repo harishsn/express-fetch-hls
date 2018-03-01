@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db_manager = require('../utils/db_manager');
+var db_manager = require('../service/dbService');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

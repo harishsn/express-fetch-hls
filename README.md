@@ -5,7 +5,6 @@ Express app that downloads a playable HLS playlist and associated video segments
 clone project and run this in root folder
 ``` bash
   $ [sudo] npm install
-  $ [sudo] node db.js
   $ [sudo] npm start
 ```
 

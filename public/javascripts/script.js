@@ -14,7 +14,9 @@ $("#theForm").submit(function(e) {
                  $('.submit-btn').val('Submit').removeAttr('disabled');
                  $(".output").html(`<p class='url'>${data.message}</p>`);
                  $( ".btn-group" ).removeClass( "hidden" );
-                 fetchRecent();
+                 setTimeout(()=>{
+                   fetchRecent();
+                 },1000);
                }else{
                  $('.submit-btn').val('Submit').removeAttr('disabled');
                  alert(data.message);
